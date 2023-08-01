@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class=" col-md-6 offset-md-3">
+
+
+
+<h1> UML CONVERTER </h1>
+
+<form method="POST" action="{%url 'home'%}">
+    {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="textArea1label" class="form-label">Input Functional Requirements:</label>
+        <textarea class="form-control" name="textArea1" id="textArea1" rows="10" placeholder="Enter Requirements" required></textarea>
+        <br/>
+        <button type="submit" class="btn btn-dark">Make UML</button>
+      </div>
+
+</form>
+
+
+
+
+</div>
+
+{% endblock%}
