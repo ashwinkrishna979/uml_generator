@@ -8,16 +8,9 @@ def home(request):
 
     if request.method =='POST':
         inptext= request.POST['textArea1']
-        output= findEntity(inptext)
-        response_text = f'<h1>{output}</h1>'
-
-
-
-
-
+        actor, usecase= findEntity(inptext)
+        response_text = f'<h1>{actor}, {usecase}</h1>'
         return HttpResponse(response_text)
-
-    
 
     else:
         return render(request, 'home.html', {})
