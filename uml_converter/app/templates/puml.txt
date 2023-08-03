@@ -1,0 +1,5 @@
+@startuml
+actor fasdasd as f0
+usecase  as u0
+f0 --> u0
+@enduml
