@@ -1,5 +1,5 @@
 @startuml
-actor fasdasd as f0
-usecase  as u0
+actor system as f0
+usecase prevent_users_accessing_cases as u0
 f0 --> u0
 @enduml

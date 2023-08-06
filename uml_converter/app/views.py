@@ -3,24 +3,43 @@ from django.http import HttpResponse
 from app.findEntity import findEntity
 from app.generateUmlCode import generate_usecase_diagram
 from app.renderDiagram import generate_uml_diagram
-
+from app.requirement_predictor import predict_requirement
+import nltk
+nltk.download('punkt') 
+from nltk.tokenize import sent_tokenize
 
 # Create your views here.
 
 def home(request):
 
     if request.method =='POST':
-        inptext= request.POST['textArea1']
-        actor, usecase= findEntity(inptext)
-        puml=generate_usecase_diagram(actor,usecase)
-        generate_uml_diagram(puml)
+        sentences= request.POST['textArea1']
+        sentences_tokenized=sent_tokenize(sentences)
+        actors=[]
+        usecases=[]
+        for inptext in sentences_tokenized:
+
+            if predict_requirement(inptext)==True:
+                actor, usecase= findEntity(inptext)
+                if(actor[0] and usecase[0]):
+                    actors.append(actor)
+                    usecases.append(usecase)
 
 
 
 
-        #response_text = f'<h1>{puml}</h1>'
-        #return HttpResponse(response_text)
-        return render(request, 'output.html', {})
+        # puml=generate_usecase_diagram(actor,usecase)
+        # generate_uml_diagram(puml)
+        response_text = f'<h1>{actors}{usecases}</h1>'
+        return HttpResponse(response_text)
+        # return render(request, 'output.html', {})
+            
+
+
+
+            # else:
+            #     return HttpResponse(f'<h1>not req</h1>')
+
 
     else:
         return render(request, 'home.html', {})
