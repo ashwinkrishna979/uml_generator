@@ -1,20 +1,28 @@
-def generate_usecase_diagram(actor,usecase):
+def generate_usecase_diagram(actors, usecases):
     puml_code = "@startuml\n"
 
-    i=0
-    for act, use in zip(actor,usecase):
-        puml_code += f"actor {act} as f{i}\n"
-        puml_code += f"usecase {use} as u{i}\n"
-        i+=1
+    act = set()
+    use = set()
 
-    i=0
-    for act, use in zip(actor,usecase):
-    
-        puml_code += f"f{i} --> u{i}\n"
-        i+=1
-        
+    for actor in actors:
+        act.update(actor)
+
+    for usecase in usecases:
+        use.update(usecase)
+
+    act2index = {word: index for index, word in enumerate(act)}
+    use2index = {word: index for index, word in enumerate(use)}
+
+    for actor in act:
+        puml_code += f"actor {actor} as f{act2index.get(actor)}\n"
+
+    for usecase in use:
+        puml_code += f"usecase {usecase} as u{use2index.get(usecase)}\n"
+
+    for actor, usecase in zip(actors, usecases):
+        for a in actor:
+            for u in usecase:
+                puml_code += f"f{act2index.get(a)} --> u{use2index.get(u)}\n"
 
     puml_code += "@enduml"
-    print(puml_code)
-
     return puml_code

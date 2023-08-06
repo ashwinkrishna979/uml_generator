@@ -20,6 +20,7 @@ def home(request):
         for inptext in sentences_tokenized:
 
             if predict_requirement(inptext)==True:
+
                 actor, usecase= findEntity(inptext)
                 if(actor[0] and usecase[0]):
                     actors.append(actor)
@@ -28,11 +29,11 @@ def home(request):
 
 
 
-        # puml=generate_usecase_diagram(actor,usecase)
-        # generate_uml_diagram(puml)
-        response_text = f'<h1>{actors}{usecases}</h1>'
-        return HttpResponse(response_text)
-        # return render(request, 'output.html', {})
+        puml=generate_usecase_diagram(actors,usecases)
+        generate_uml_diagram(puml)
+        #response_text = f'<h1>{actors}{usecases}</h1>'
+        #return HttpResponse(response_text)
+        return render(request, 'output.html', {})
             
 
 
