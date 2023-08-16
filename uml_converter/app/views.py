@@ -7,6 +7,7 @@ from app.requirement_predictor import predict_requirement
 import nltk
 nltk.download('punkt') 
 from nltk.tokenize import sent_tokenize
+from app.sentenceSimplifier import reformat
 
 # Create your views here.
 
@@ -19,7 +20,9 @@ def home(request):
         usecases=[]
         for inptext in sentences_tokenized:
 
-            if predict_requirement(inptext)==True:
+            if predict_requirement(inptext) in [True,False]:# change to true
+
+                inptext=reformat(inptext)[2:] #using davinchi
 
                 actor, usecase= findEntity(inptext)
                 if(actor[0] and usecase[0]):
@@ -28,7 +31,11 @@ def home(request):
 
 
 
+        if actors==[]:
 
+            return HttpResponse('<h1>ERROR</h1>')
+
+        
         puml=generate_usecase_diagram(actors,usecases)
         generate_uml_diagram(puml)
         #response_text = f'<h1>{actors}{usecases}</h1>'
