@@ -13,3 +13,4 @@ def reformat(sentence):
   )
 
   return response['choices'][0]['text']
+#reformat('abs')

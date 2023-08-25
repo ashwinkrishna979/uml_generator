@@ -1,13 +1,17 @@
 def generate_usecase_diagram(actors, usecases):
     puml_code = "@startuml\n"
 
+
+
     act = set()
     use = set()
 
     for actor in actors:
+        #actor.replace(" ", "")
         act.update(actor)
 
     for usecase in usecases:
+       # usecase.replace(" ", "")
         use.update(usecase)
 
     act2index = {word: index for index, word in enumerate(act)}
