@@ -29,7 +29,7 @@ def home(request):
                     inptext=reformat(inptext)[2:] #using davinchi
 
                     actor, usecase= findEntity(inptext)
-                    if(actor[0] and usecase[0]):
+                    if(actor and usecase):
                         actors.append(actor)
                         usecases.append(usecase)
 

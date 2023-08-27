@@ -44,9 +44,9 @@ def getUsecaseEntity(sentence):
 
             
             
-        act_out=[((('_'.join(actors)).replace(" ", "")).replace(',','_')).replace('-','_')]
+        act_out='_'.join(actors)
         # use_out=['_'.join(usecases)]
-        entity_out=[((('_'.join(entity)).replace(" ", "")).replace(',','_')).replace('-','_')]
+        entity_out='_'.join(entity)
 
         return act_out, entity_out #,act_out,use_out,
 

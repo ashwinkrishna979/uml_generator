@@ -1,11 +1,56 @@
 @startuml
-actor user as f0
-actor admin as f1
-usecase admin as u0
-usecase send as u1
-usecase create as u2
-f0 --> u1
-f1 --> u2
-f0 --> u2
-f1 --> u0
+left to right direction
+actor requirement as f0
+actor Contacts_and_Chat_Users as f1
+actor media as f2
+actor application as f3
+actor participant_management as f4
+actor Group_admins as f5
+actor Usecase_diagram_actor_in_the_following_sentence_1 as f6
+actor user as f7
+actor Chats as f8
+actor users as f9
+actor Caller as f10
+actor Users as f11
+actor WhatsApp_application as f12
+actor actors as f13
+actor The_flies_travel_to_their_next_destination_by_means_of_a_canal_boat as f14
+actor User as f15
+usecase edit as u0
+usecase I_read_the_manuscript as u1
+usecase sync as u2
+usecase Chats_must_support_the_exchange_of_text_messages__emojis__and_multimedia_files as u3
+usecase Group_admins_must_have_the_ability as u4
+usecase Users_must_be_able_to_send_images__videos__audio_clips__and_documents_to_their_contacts as u5
+usecase adding__removing_members as u6
+usecase describe as u7
+usecase Voice_and_Video_Calls as u8
+usecase initiating as u9
+usecase create as u10
+usecase compress as u11
+usecase Log_in as u12
+usecase The_WhatsApp_application_is_a_real_time_messaging_platform_that_allows_users_to_send_text_messages__multimedia_files__make_voice_and_video_calls__and_share_various_types_of_content as u13
+usecase initiate as u14
+usecase Users as u15
+usecase In_the_beginning__the_group_sat as u16
+usecase Calls as u17
+f6 --> u16
+f12 --> u13
+f0 --> u7
+f14 --> u1
+f15 --> u15
+f9 --> u12
+f13 --> u0
+f1 --> u15
+f7 --> u14
+f8 --> u3
+f3 --> u2
+f9 --> u10
+f4 --> u6
+f5 --> u4
+f3 --> u8
+f9 --> u9
+f10 --> u17
+f11 --> u5
+f2 --> u11
 @enduml

@@ -39,8 +39,8 @@ def findEntity(text):
         elif output[i]==1:
             usecase.append(test_sentence_lower[i])
 
-    actor=['_'.join(actor)]
-    usecase=['_'.join(usecase)]
+    actor='_'.join(actor)
+    usecase='_'.join(usecase)
 
 
  
