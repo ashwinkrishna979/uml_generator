@@ -1,4 +1,5 @@
 def replace_characters(input_string):
+    
     replacements = {'.': '', '-': '_', ' ': '',',':'_','/':'_or_'}
     
     for original, replacement in replacements.items():
@@ -13,8 +14,6 @@ def generate_usecase_diagram(actors_, usecases_):
     actors=[]
     usecases=[]
 
-
-
     act = set()
     use = set()
 
@@ -27,7 +26,6 @@ def generate_usecase_diagram(actors_, usecases_):
         u=[replace_characters(str(usecase))]
         use.update(u)
         usecases.append(u)
-    print(use)
     
 
     act2index = {word: index for index, word in enumerate(act)}
@@ -35,9 +33,13 @@ def generate_usecase_diagram(actors_, usecases_):
 
     for actor in act:
         puml_code += f"actor {''.join(actor)} as f{act2index.get(actor)}\n"
+    
+    puml_code += 'rectangle {\n'
 
     for usecase in use:
         puml_code += f"usecase {''.join(usecase)} as u{use2index.get(usecase)}\n"
+
+    puml_code += '}\n'
 
     for actor, usecase in zip(actors, usecases):
         for a in actor:

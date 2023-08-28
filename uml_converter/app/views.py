@@ -24,9 +24,10 @@ def home(request):
             usecases=[]
             for inptext in sentences_tokenized:
 
-                if predict_requirement(inptext) in [True,False]:# change to true
+                if predict_requirement(inptext) in [True]:# change to true
 
                     inptext=reformat(inptext)[2:] #using davinchi
+                    print(inptext)
 
                     actor, usecase= findEntity(inptext)
                     if(actor and usecase):

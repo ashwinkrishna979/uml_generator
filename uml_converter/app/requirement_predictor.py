@@ -1,6 +1,8 @@
 import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 import os
+import warnings
+warnings.filterwarnings("ignore", message="Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['pre_classifier.bias', 'classifier.weight', 'classifier.bias', 'pre_classifier.weight']\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.")
 
 def predict_requirement(sentence):
 
@@ -37,6 +39,7 @@ def predict_requirement(sentence):
     predicted_class = predicted_class.item()
 
     # return prediction
+    warnings.resetwarnings()
     return False if predicted_class == 1 else True
 
 
