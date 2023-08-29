@@ -2,6 +2,23 @@
 
 {% block content %}
 
+
+<style>
+  table {
+      border-collapse: collapse;
+      width: 100%;
+  }
+  
+  th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+  }
+  
+  th {
+      background-color: #f2f2f2;
+  }
+</style>
 <div class=" col-md-6 offset-md-3">
 
 
@@ -23,8 +40,36 @@
         <label for="textArea1label" class="form-label">Input Functional Requirements:</label>
         <textarea class="form-control" name="textArea1" id="textArea1" rows="5" placeholder="Enter Requirements" required></textarea>
         <br/>
-        <button type="submit" class="btn btn-dark">Make UML</button>
+        <button type="submit" name="action" value="make" class="btn btn-dark">Make UML</button>
       </div>
+      <br/>
+
+      <div class="mb-3">
+        <table>
+          <thead>
+              <tr>
+                  <th>ACTOR</th>
+                  <th>USECASE</th>
+                  <th>SENTENCE</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for item in items %}
+                  <tr>
+                      <td><input type="text" name='actor_{{ item.id }}' value="{{ item.actor}}"></td>
+                      <td><input type="text" name='usecase_{{ item.id }}' value="{{ item.usecase}}"></td>
+                      <td><input type="text" name='sentence_{{ item.id }}' value="{{ item.sentence}}"></td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <br/>
+
+      <button type="submit" name="action" class="btn btn-dark" value="correct">Correct UML</button>
+      <br/>
+      <br/>
 
 
       <div class="mb-3">

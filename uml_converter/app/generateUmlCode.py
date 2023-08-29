@@ -1,3 +1,6 @@
+from app.models import Entity
+
+
 def replace_characters(input_string):
     
     replacements = {'.': '', '-': '_', ' ': '',',':'_','/':'_or_'}
@@ -7,7 +10,10 @@ def replace_characters(input_string):
     
     return input_string
 
-def generate_usecase_diagram(actors_, usecases_):
+def generate_usecase_diagram(actors_, usecases_,text_):
+    Entity.objects.all().delete() #clear database
+
+
     puml_code = "@startuml\n"
     puml_code += "left to right direction\n"
 
@@ -17,16 +23,30 @@ def generate_usecase_diagram(actors_, usecases_):
     act = set()
     use = set()
 
-    for actor in actors_:
-        a=[replace_characters(str(actor))]
-        act.update(a)
-        actors.append(a)
+    # for actor in actors_:
+    #     a=[replace_characters(str(actor))]
+    #     act.update(a)
+    #     actors.append(a)
 
-    for usecase in usecases_:
-        u=[replace_characters(str(usecase))]
-        use.update(u)
-        usecases.append(u)
+    # for usecase in usecases_:
+    #     u=[replace_characters(str(usecase))]
+    #     use.update(u)
+    #     usecases.append(u)
+
+
     
+
+    for actor,usecase,text in zip(actors_,usecases_,text_):
+        a=[replace_characters(str(actor))]
+        u=[replace_characters(str(usecase))]
+        act.update(a)
+        use.update(u)
+        actors.append(a)
+        usecases.append(u)
+        new_entity = Entity(actor=''.join(a),usecase=''.join(u),sentence=text)
+        new_entity.save()
+
+
 
     act2index = {word: index for index, word in enumerate(act)}
     use2index = {word: index for index, word in enumerate(use)}
