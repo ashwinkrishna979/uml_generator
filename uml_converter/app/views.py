@@ -11,7 +11,7 @@ from app.sentenceSimplifier import reformat
 from app.summariser import summariser
 from app.flanUsecaseEntityDetector import getUsecaseEntity
 from app.models import Entity
-from django.http import FileResponse
+from django.http import JsonResponse
 import os
 from django.conf import settings
 
@@ -21,12 +21,13 @@ def home(request):
 
     if request.method =='POST':
         action = request.POST.get('action')
+        requirement= request.POST['textArea1']
 
         if action =='make':
             selected_option = request.POST.get('selection', None)
             if selected_option == 'knn':
-                sentences= request.POST['textArea1']
-                sentences_tokenized=sent_tokenize(sentences)
+                
+                sentences_tokenized=sent_tokenize(requirement)
                 actors=[]
                 usecases=[]
                 text=[] #to store sentences for semi automatic function
@@ -54,15 +55,15 @@ def home(request):
                 #response_text = f'<h1>{actors}{usecases}</h1>'
                 #return HttpResponse(response_text)
                 entity= Entity.objects.all()
-                return render(request, 'output.html', {'items': entity})
+                return render(request, 'output.html', {'items': entity, 'input_txt':requirement})
 
                     # else:
                     #     return HttpResponse(f'<h1>not req</h1>')
 
             elif selected_option == 'use_case_llm':
-                sentences= request.POST['textArea1']
+         
                 #sentences=summariser(sentences) ..................................................
-                sentences=sent_tokenize(sentences)
+                sentences=sent_tokenize(requirement)
                 actors=[]
                 usecases=[]
               
@@ -77,9 +78,8 @@ def home(request):
 
                 puml=generate_usecase_diagram(actors,usecases)
                 generate_uml_diagram(puml)
-                #response_text = f'<h1>{actors}{usecases}</h1>'
-                #return HttpResponse(response_text)
-                return render(request, 'output.html', {})
+                entity= Entity.objects.all()
+                return render(request, 'output.html', {'items': entity, 'input_txt':requirement})
 
             # else:
         elif action=='correct':
@@ -97,7 +97,7 @@ def home(request):
             puml=generate_usecase_diagram(actors,usecases,texts)
             generate_uml_diagram(puml)
             entity= Entity.objects.all()
-            return render(request, 'output.html', {'items': entity})
+            return render(request, 'output.html', {'items': entity,'input_txt':requirement})
         
         elif action =='download':
             file_path = os.path.join(settings.TEMPLATES_,'puml.png')
@@ -106,18 +106,10 @@ def home(request):
                     response = HttpResponse(fh.read(), content_type="image/png")
                     response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
                     return response
-            #raise Http404
-
-
-        
-
-
-
-            
-
-            
+            #raise Http404            
         
     else:
+        
         return render(request, 'home.html', {})
     
 
@@ -132,3 +124,14 @@ def diag(request):
     with open(image_file_path, 'rb') as image_file:
         image_data = image_file.read()
     return HttpResponse(image_data, content_type="image/png")
+
+
+
+
+def delete_item(request, item_id):
+    try:
+        item = Entity.objects.get(pk=item_id)
+        item.delete()
+        return JsonResponse({'success': True})
+    except Entity.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Item not found'})

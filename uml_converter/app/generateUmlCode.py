@@ -10,7 +10,7 @@ def replace_characters(input_string):
     
     return input_string
 
-def generate_usecase_diagram(actors_, usecases_,text_):
+def generate_usecase_diagram(actors_, usecases_,text_=None):
     Entity.objects.all().delete() #clear database
 
 
@@ -34,17 +34,29 @@ def generate_usecase_diagram(actors_, usecases_,text_):
     #     usecases.append(u)
 
 
-    
+    if text_ !=None:
 
-    for actor,usecase,text in zip(actors_,usecases_,text_):
-        a=[replace_characters(str(actor))]
-        u=[replace_characters(str(usecase))]
-        act.update(a)
-        use.update(u)
-        actors.append(a)
-        usecases.append(u)
-        new_entity = Entity(actor=''.join(a),usecase=''.join(u),sentence=text)
-        new_entity.save()
+        for actor,usecase,text in zip(actors_,usecases_,text_):
+            a=[replace_characters(str(actor))]
+            u=[replace_characters(str(usecase))]
+            act.update(a)
+            use.update(u)
+            actors.append(a)
+            usecases.append(u)
+            new_entity = Entity(actor=''.join(a),usecase=''.join(u),sentence=text)
+            new_entity.save()
+
+    else:
+        for actor,usecase in zip(actors_,usecases_):
+            a=[replace_characters(str(actor))]
+            u=[replace_characters(str(usecase))]
+            act.update(a)
+            use.update(u)
+            actors.append(a)
+            usecases.append(u)
+            new_entity = Entity(actor=''.join(a),usecase=''.join(u),sentence='sentence tracing is not possible for this model')
+            new_entity.save()
+
 
 
 

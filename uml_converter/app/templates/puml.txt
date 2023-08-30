@@ -2,7 +2,7 @@
 left to right direction
 actor user as f0
 rectangle {
-usecase send as u0
+usecase send_message as u0
 }
 f0 --> u0
 @enduml

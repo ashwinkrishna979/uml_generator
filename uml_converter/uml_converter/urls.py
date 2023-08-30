@@ -22,6 +22,7 @@ from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('puml',views.diag,name='diag')
+    path('puml',views.diag,name='diag'),
+    path('delete_item/<int:item_id>/', views.delete_item, name='delete_item'),
 
 ]
