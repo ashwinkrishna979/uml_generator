@@ -1,12 +1,8 @@
 @startuml
 left to right direction
 actor user as f0
-actor admin as f1
 rectangle {
-usecase control_user as u0
-usecase send_messages as u1
+usecase send as u0
 }
-f0 --> u1
-f1 --> u1
-f1 --> u0
+f0 --> u0
 @enduml

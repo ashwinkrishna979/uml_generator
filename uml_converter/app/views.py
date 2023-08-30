@@ -11,6 +11,9 @@ from app.sentenceSimplifier import reformat
 from app.summariser import summariser
 from app.flanUsecaseEntityDetector import getUsecaseEntity
 from app.models import Entity
+from django.http import FileResponse
+import os
+from django.conf import settings
 
 
 
@@ -87,10 +90,6 @@ def home(request):
                 actor=request.POST.get(f'actor_{entity.id}')
                 usecase=request.POST.get(f'usecase_{entity.id}')
                 sentence=request.POST.get(f'sentence_{entity.id}')
-                # entity.actor = actor
-                # entity.usecase = usecase
-                # entity.sentence = sentence
-                # entity.save()
                 actors.append(actor)
                 usecases.append(usecase)
                 texts.append(sentence)
@@ -99,6 +98,21 @@ def home(request):
             generate_uml_diagram(puml)
             entity= Entity.objects.all()
             return render(request, 'output.html', {'items': entity})
+        
+        elif action =='download':
+            file_path = os.path.join(settings.TEMPLATES_,'puml.png')
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as fh:
+                    response = HttpResponse(fh.read(), content_type="image/png")
+                    response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
+                    return response
+            #raise Http404
+
+
+        
+
+
+
             
 
             
@@ -113,7 +127,7 @@ def home(request):
     
 def diag(request):
     
-    image_file_path='app/templates/puml.png'
+    image_file_path=os.path.join(settings.TEMPLATES_,'puml.png')
 
     with open(image_file_path, 'rb') as image_file:
         image_data = image_file.read()
