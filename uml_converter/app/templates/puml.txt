@@ -1,8 +1,11 @@
 @startuml
 left to right direction
-actor user as f0
+actor khiaj as f0
+actor user as f1
 rectangle {
 usecase send_message as u0
+usecase lwjdl as u1
 }
-f0 --> u0
+f1 --> u0
+f0 --> u1
 @enduml

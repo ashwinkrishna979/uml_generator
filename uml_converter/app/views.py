@@ -14,6 +14,7 @@ from app.models import Entity
 from django.http import JsonResponse
 import os
 from django.conf import settings
+import json
 
 
 
@@ -93,6 +94,8 @@ def home(request):
                 actors.append(actor)
                 usecases.append(usecase)
                 texts.append(sentence)
+                print(actor)
+                print(sentence)
            
             puml=generate_usecase_diagram(actors,usecases,texts)
             generate_uml_diagram(puml)
@@ -135,3 +138,31 @@ def delete_item(request, item_id):
         return JsonResponse({'success': True})
     except Entity.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Item not found'})
+    
+
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+def add_item(request):
+    if request.method == 'POST' and is_ajax(request):
+        try:
+            json_data = json.loads(request.body)
+            new_actor = json_data.get('new_actor')
+            new_usecase = json_data.get('new_usecase')
+            new_sentence = json_data.get('new_sentence')
+            
+            # Create a new Entity instance and save it to the database
+            new_item = Entity(actor=new_actor, usecase=new_usecase, sentence=new_sentence)
+            new_item.save()
+
+            entity= Entity.objects.all()
+            entity_list = list(entity.values())
+            print(entity_list)
+
+
+
+            return JsonResponse({'success': True, 'items': entity_list})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON data'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request'})
