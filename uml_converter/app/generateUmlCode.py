@@ -3,7 +3,7 @@ from app.models import Entity
 
 def replace_characters(input_string):
     
-    replacements = {'.': '', '-': '_', ' ': '',',':'_','/':'_or_'}
+    replacements = {'.': '', '-': '_', ' ': '',',':'_','/':'_or_','*':'_',':':'_'}
     
     for original, replacement in replacements.items():
         input_string = input_string.replace(original, replacement)

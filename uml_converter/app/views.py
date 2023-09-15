@@ -6,7 +6,7 @@ from app.renderDiagram import generate_uml_diagram
 from app.requirement_predictor import predict_requirement
 import nltk
 nltk.download('punkt') 
-from nltk.tokenize import sent_tokenize
+from nltk.tokenize import sent_tokenize,word_tokenize
 from app.sentenceSimplifier import reformat
 from app.summariser import summariser
 from app.flanUsecaseEntityDetector import getUsecaseEntity
@@ -15,6 +15,7 @@ from django.http import JsonResponse
 import os
 from django.conf import settings
 import json
+from nltk.stem import PorterStemmer
 
 
 
@@ -34,15 +35,17 @@ def home(request):
                 text=[] #to store sentences for semi automatic function
                 for inptext in sentences_tokenized:
 
-                    if predict_requirement(inptext) in [True]:# change to true
+                    if predict_requirement(inptext) in [True] and ' ' in inptext:# change to true
 
                         text.append(inptext)
 
-                        inptext=reformat(inptext)[2:] #using davinchi
+                        inptext=reformat(inptext)[2:] #using davincii
                         print(inptext)
 
                         actor, usecase= findEntity(inptext)
-                        if(actor and usecase):
+                        ps = PorterStemmer()
+                   
+                        if( ps.stem(word=str(actor)) in [ps.stem(x) for x in word_tokenize(str(text))] and actor and usecase):
                             actors.append(actor)
                             usecases.append(usecase)
                         else:
