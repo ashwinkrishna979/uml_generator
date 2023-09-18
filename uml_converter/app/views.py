@@ -43,9 +43,10 @@ def home(request):
                         print(inptext)
 
                         actor, usecase= findEntity(inptext)
+                        print(actor)
                         ps = PorterStemmer()
                    
-                        if( ps.stem(word=str(actor)) in [ps.stem(x) for x in word_tokenize(str(text))] and actor and usecase):
+                        if( actor and usecase ):# and ps.stem(word=str(actor)) in [ps.stem(x) for x in word_tokenize(str(text))]):
                             actors.append(actor)
                             usecases.append(usecase)
                         else:
@@ -68,19 +69,27 @@ def home(request):
          
                 #sentences=summariser(sentences) ..................................................
                 sentences=sent_tokenize(requirement)
+
                 actors=[]
                 usecases=[]
+                text=[]
+
+                
               
                 for inptext in sentences:
+                    if predict_requirement(inptext) in [True] and ' ' in inptext:
+                        text.append(inptext)
                     
-                    actor,usecase=getUsecaseEntity(inptext)
-                    if(actor[0] and usecase[0]):
-                        actors.append(actor)
-                        usecases.append(usecase)
+                        actor,usecase=getUsecaseEntity(inptext)
+                        if(actor[0] and usecase[0]):
+                            actors.append(actor)
+                            usecases.append(usecase)
+                        else:
+                            text.pop()
                 if actors==[]:
                     return HttpResponse('<h1>ERROR</h1>')
 
-                puml=generate_usecase_diagram(actors,usecases)
+                puml=generate_usecase_diagram(actors,usecases,text)
                 generate_uml_diagram(puml)
                 entity= Entity.objects.all()
                 return render(request, 'output.html', {'items': entity, 'input_txt':requirement})
