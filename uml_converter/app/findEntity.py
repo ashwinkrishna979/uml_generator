@@ -3,10 +3,11 @@ import pandas as pd
 import pickle
 import os
 nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
 from nltk.stem import WordNetLemmatizer
 
 
-
+# function to extract usecase diagram entities using machine learing model (KNN)
 
 def findEntity(text):
     lemmatizer = WordNetLemmatizer()

@@ -10,6 +10,8 @@ def replace_characters(input_string):
     
     return input_string
 
+# Function to generate puml script of UML usecase diagram by inputting actors, usecases and requirement sentences
+
 def generate_usecase_diagram(actors_, usecases_,text_=None):
     Entity.objects.all().delete() #clear database
 
@@ -23,15 +25,6 @@ def generate_usecase_diagram(actors_, usecases_,text_=None):
     act = set()
     use = set()
 
-    # for actor in actors_:
-    #     a=[replace_characters(str(actor))]
-    #     act.update(a)
-    #     actors.append(a)
-
-    # for usecase in usecases_:
-    #     u=[replace_characters(str(usecase))]
-    #     use.update(u)
-    #     usecases.append(u)
 
 
     if text_ !=None:

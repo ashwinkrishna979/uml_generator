@@ -1,5 +1,6 @@
 import subprocess
 
+# function for rendering puml script to UML daiagram
 def generate_uml_diagram(puml):
     tempuml='app/templates/puml.txt'
     try:

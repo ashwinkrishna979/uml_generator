@@ -4,6 +4,7 @@ import os
 import warnings
 warnings.filterwarnings("ignore", message="Some weights of DistilBertForSequenceClassification were not initialized from the model checkpoint at distilbert-base-uncased and are newly initialized: ['pre_classifier.bias', 'classifier.weight', 'classifier.bias', 'pre_classifier.weight']\nYou should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.")
 
+# function to classify sentence as sentence usefull for entity extraction and sentence useless for entity extraction
 def predict_requirement(sentence):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -19,7 +20,7 @@ def predict_requirement(sentence):
 
     # Assuming you have loaded the trained model already
     model_loaded = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased")
-    model_path = os.path.join(os.path.dirname(__file__), r"C:\req_classifier\req_classifier.pth")
+    model_path = os.path.join(os.path.dirname(__file__), r"req_classifier.pth")
     model_loaded.load_state_dict(torch.load(model_path))
     # Set the model to evaluation mode
     model_loaded.eval()

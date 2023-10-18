@@ -2,6 +2,8 @@ import openai
 from django.shortcuts import render
 from django.conf import settings
 
+#function to do sentence reformatting
+
 def reformat(sentence):
 
   openai.api_key =settings.OPENAI_API_KEY 
@@ -13,4 +15,3 @@ def reformat(sentence):
   )
 
   return response['choices'][0]['text']
-#reformat('abs')
