@@ -21,21 +21,22 @@ If you encounter any issues related to internet connectivity while using the app
 Follow these steps to install and run the UML Converter web application:
 
 1. Clone this repository to your local machine.
+2. Download the classifier model from [https://drive.google.com/file/d/1t8qn8R68N1v1YAsQ90ISub_6sPe29x28/view?usp=sharing](https://drive.google.com/file/d/1t8qn8R68N1v1YAsQ90ISub_6sPe29x28/view?usp=sharing) and paste it in `uml_converter\app`.
 
-2. Open a command prompt and navigate to the project directory.
+3. Open a command prompt and navigate to the project directory.
 
-3. Create a virtual environment using the following commands:  
+4. Create a virtual environment using the following commands:  
    `pip install virtualenv`  
    `python -m virtualenv umlcon_env`
-4. Activate the virtual environment:  
+5. Activate the virtual environment:  
    `cd umlcon_env/scripts`  
    `./activate`
-5. Install the required dependencies:  
+6. Install the required dependencies:  
    `cd ../..`  
    `pip install -r requirements.txt`
-6. Start the server:  
+7. Start the server:  
    `./run.bat`
-7. Open your web browser and access the application at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+8. Open your web browser and access the application at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
 ## Usage
 
